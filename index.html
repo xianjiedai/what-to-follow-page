@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OPTIC: Object-or-Position Tests for In-Context imitation learning. A benchmark that separates the object and the position cues of a demonstration to show which one an in-context imitation learning policy follows.">
+  <title>What to Follow in In-Context Imitation Learning</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+<!-- ======================= Hero ======================= -->
+<section class="hero page-hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <h1 class="publication-title">What to Follow in In-Context Imitation Learning</h1>
+      <p class="publication-subtitle">
+        <b>OPTIC</b>: <span class="obj">O</span>bject-or-<span class="pos">P</span>osition <b>T</b>ests for <b>I</b>n-<b>C</b>ontext imitation learning
+      </p>
+
+      <div class="publication-authors">
+        <span class="author">Xianjie Dai<sup>1,*</sup></span>
+        <span class="author">Li Mi<sup>2,*</sup></span>
+        <span class="author">Ahmad Mouri Zadeh Khaki<sup>1</sup></span>
+        <span class="author">Kyunghwan Choi<sup>1</sup></span>
+        <span class="author">Mohamed Elhoseiny<sup>3</sup></span>
+        <span class="author">Heye Huang<sup>1,&dagger;</sup></span>
+        <span class="author">Jian Ding<sup>3,&dagger;</sup></span>
+      </div>
+      <div class="publication-affiliations">
+        <span><sup>1</sup>KAIST</span>
+        <span><sup>2</sup>ETH Zurich</span>
+        <span><sup>3</sup>KAUST</span>
+      </div>
+      <div class="author-notes">
+        <span><sup>*</sup>Equal contribution</span>
+        <span><sup>&dagger;</sup>Corresponding authors</span>
+      </div>
+      <div class="affiliation-logos">
+        <img class="logo-kaist" src="static/images/logos/kaist.png" alt="KAIST">
+        <img class="logo-eth" src="static/images/logos/eth.png" alt="ETH Zurich">
+        <img class="logo-kaust" src="static/images/logos/kaust.png" alt="KAUST">
+      </div>
+
+      <div class="publication-links">
+        <!-- PLACEHOLDER: arXiv, Paper and Dataset links are filled in later. -->
+        <a href="#" class="btn-link is-pending" title="Coming soon" aria-disabled="true"><i class="ai ai-arxiv"></i><span>arXiv</span></a>
+        <a href="#" class="btn-link is-pending" title="Coming soon" aria-disabled="true"><i class="fas fa-file-pdf"></i><span>Paper</span></a>
+        <a href="https://github.com/xianjiedai/OPTIC" class="btn-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i><span>Code</span></a>
+        <a href="#" class="btn-link is-pending" title="Coming soon" aria-disabled="true"><span aria-hidden="true">🤗</span><span>Dataset</span></a>
+        <a href="#videos" class="btn-link"><i class="fas fa-play"></i><span>Videos</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= What to follow ======================= -->
+<section class="section tight-top">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">What to Follow?</h2>
+    <p class="lead">
+      A demonstration shows both the <span class="obj">object</span> the robot handles and its <span class="pos">position</span>.
+      When the two cues diverge in a new scene, an in-context imitation learning (ICIL) policy must decide which one to follow.
+    </p>
+    <div class="fig-card narrow">
+      <img src="static/images/paper/fig1_teaser.jpg" alt="A demonstration picks up the carrot from slot A. In the new test scene the carrot lies in slot B and a mushroom in slot A: following the object selects the carrot, following the position selects the mushroom.">
+    </div>
+    <p class="fig-caption">
+      The demonstration picks up the carrot from slot&nbsp;A. In the new scene, following the object selects the carrot;
+      following the demonstrated position selects the mushroom at slot&nbsp;A.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= Motivation ======================= -->
+<section class="section wash">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Motivation</h2>
+    <div class="prose has-text-justified">
+      <p>
+        ICIL allows a robot policy to perform a task in a new scene following a demonstration, without updating its weights.
+        In common evaluations, however, the object and position cues are mostly aligned between the demonstration and the new scene,
+        so a success does not show which one the policy followed.
+        We introduce <b>OPTIC</b>, a benchmark that tells the two cues apart, and use it to evaluate six ICIL policies,
+        both end-to-end and optimization-based, on placement, pouring, and insertion tasks, each at three generalization levels.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= Benchmark ======================= -->
+<section class="section" id="benchmark">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">The OPTIC Benchmark</h2>
+    <div class="prose has-text-justified">
+      <p>
+        The target scene and its correct action stay fixed; only the demonstration changes.
+        In the <span class="obj">Object-follow test</span> the demonstration shares only the object, in the <span class="pos">Spatial-follow test</span> only the position,
+        and in the <span class="mat">Match test</span> both, as in most current evaluations.
+        Training pairs are built the same three ways from the same recorded episodes, giving Object specialists, Spatial specialists, and Match models.
+      </p>
+    </div>
+    <div class="fig-card bleed">
+      <img src="static/images/paper/fig3_pairing.jpg" alt="Training pairings (Object, Spatial, Match) and evaluation settings (Object-follow, Spatial-follow, Match tests)" loading="lazy">
+    </div>
+
+    <div class="prose has-text-justified" style="margin-top: 2.5rem;">
+      <p>
+        Three task suites define the object and the position differently. Each is tested at three generalization levels:
+        L1 keeps the training conditions, L2 introduces unseen appearances, combinations, or colors, and L3 unseen shapes, routes, or socket positions.
+      </p>
+    </div>
+    <div class="fig-card bleed">
+      <img src="static/images/paper/fig2_benchmark.jpg" alt="Three task suites (Placement, Pouring, Insertion), each at three generalization levels" loading="lazy">
+    </div>
+    <p class="fig-caption">
+      Evaluated policies: ICRT, ICLR, BPP, ContextFlow, and Instant-Fold (end-to-end), IMOP (optimization-based), and GPT-Policy (zero-shot VLM agent).
+    </p>
+  </div>
+</section>
+
+<!-- ======================= Results ======================= -->
+<section class="section wash" id="results">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Results</h2>
+
+    <h3 class="sub-title">Trained on Match pairs, policies follow the position</h3>
+    <div class="prose has-text-justified">
+      <p>
+        Across the six trained policies, Spatial-follow success keeps 93.7% of the Match success, while Object-follow success keeps only 1.7%:
+        every end-to-end Match model scores zero in the Object-follow test. The zero-shot GPT-Policy, in contrast, follows the object.
+      </p>
+    </div>
+    <div class="table-card">
+      <div class="table-scroll">
+        <table class="rtable">
+          <thead>
+            <tr class="top">
+              <th class="left" rowspan="2">Policy</th>
+              <th colspan="3">Suite 1 Placement</th><th class="gap" rowspan="2"></th>
+              <th colspan="3">Suite 2 Pouring</th><th class="gap" rowspan="2"></th>
+              <th colspan="3">Suite 3 Insertion</th>
+            </tr>
+            <tr class="sub">
+              <th class="hm">Match</th><th class="hs">Spatial</th><th class="ho">Object</th>
+              <th class="hm">Match</th><th class="hs">Spatial</th><th class="ho">Object</th>
+              <th class="hm">Match</th><th class="hs">Spatial</th><th class="ho">Object</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="first"><td class="pol">ICRT</td>
+              <td class="ref">77.2</td><td class="bs">57.8</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">66.7</td><td class="bs">66.7</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">77.8</td><td class="bs">77.8</td><td>0.0</td></tr>
+            <tr><td class="pol">ICLR</td>
+              <td class="ref">76.7</td><td class="bs">57.8</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">66.7</td><td class="bs">66.7</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">80.0</td><td class="bs">82.2</td><td>0.0</td></tr>
+            <tr><td class="pol">BPP</td>
+              <td class="ref">66.1</td><td class="bs">63.9</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">68.9</td><td class="bs">71.7</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">95.0</td><td class="bs">95.0</td><td>0.0</td></tr>
+            <tr><td class="pol">ContextFlow</td>
+              <td class="ref">62.2</td><td class="bs">60.6</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">68.9</td><td class="bs">68.3</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">68.3</td><td class="bs">72.2</td><td>0.0</td></tr>
+            <tr><td class="pol">Instant-Fold</td>
+              <td class="ref">63.3</td><td class="bs">54.4</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">66.7</td><td class="bs">65.6</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">55.6</td><td class="bs">57.8</td><td>0.0</td></tr>
+            <tr><td class="pol">IMOP</td>
+              <td class="ref">76.7</td><td class="bs">32.2</td><td>23.3</td><td class="gap"></td>
+              <td class="ref">52.2</td><td class="bs">54.4</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">71.1</td><td class="bs">68.3</td><td>0.0</td></tr>
+            <tr class="first"><td class="pol">GPT-Policy<sup>&dagger;</sup></td>
+              <td class="ref">99.4</td><td>0.0</td><td class="bo">99.4</td><td class="gap"></td>
+              <td class="ref">100.0</td><td>0.0</td><td class="bo">83.3</td><td class="gap"></td>
+              <td class="ref">98.3</td><td>0.0</td><td class="bo">97.2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-caption">
+        Success (%) of the Match models in the Match, Spatial-follow, and Object-follow tests, averaged across generalization levels.
+        Highlighted: the higher of Spatial and Object. <sup>&dagger;</sup>Zero-shot.
+      </div>
+    </div>
+
+    <h3 class="sub-title">Re-pairing changes what a policy follows</h3>
+    <div class="prose has-text-justified">
+      <p>
+        Re-pairing the same recorded episodes, without new data or architectural changes, shifts which cue a policy follows.
+        Following the object is much harder to learn: excluding IMOP, Object specialists average 19.6% in the Object-follow test,
+        against 68.4% for Spatial specialists in the Spatial-follow test.
+      </p>
+    </div>
+    <div class="table-card">
+      <div class="table-scroll">
+        <table class="rtable compact">
+          <thead>
+            <tr class="top">
+              <th class="left" rowspan="2">Policy</th>
+              <th colspan="3"><span class="pos">Spatial</span> specialists</th><th class="gap" rowspan="2"></th>
+              <th colspan="3"><span class="obj">Object</span> specialists</th>
+            </tr>
+            <tr class="sub">
+              <th class="hm">Match</th><th class="hs">Spatial</th><th class="ho">Object</th>
+              <th class="hm">Match</th><th class="hs">Spatial</th><th class="ho">Object</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="first"><td class="pol">ICRT</td>
+              <td class="ref">67.0</td><td class="bs">66.9</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">2.7</td><td>2.8</td><td class="bo">21.4</td></tr>
+            <tr><td class="pol">ICLR</td>
+              <td class="ref">63.8</td><td class="bs">63.5</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">5.4</td><td>5.4</td><td class="bo">18.8</td></tr>
+            <tr><td class="pol">BPP</td>
+              <td class="ref">78.5</td><td class="bs">77.3</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">6.1</td><td>5.6</td><td class="bo">28.0</td></tr>
+            <tr><td class="pol">ContextFlow</td>
+              <td class="ref">70.8</td><td class="bs">69.9</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">4.4</td><td>4.0</td><td class="bo">19.0</td></tr>
+            <tr><td class="pol">Instant-Fold</td>
+              <td class="ref">64.2</td><td class="bs">64.1</td><td>0.0</td><td class="gap"></td>
+              <td class="ref">5.9</td><td>5.1</td><td class="bo">10.7</td></tr>
+            <tr><td class="pol">IMOP</td>
+              <td class="ref">66.5</td><td class="bs">62.4</td><td>0.1</td><td class="gap"></td>
+              <td class="ref">56.1</td><td>0.4</td><td class="bo">46.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-caption">
+        Success (%) averaged across levels and the three suites, mean over three training runs. Highlighted: the test that shares the cue of the training pairing.
+        Per-suite results are in the paper.
+      </div>
+    </div>
+
+    <h3 class="sub-title">One model can hold both abilities</h3>
+    <div class="prose has-text-justified">
+      <p>
+        Re-pairing yields one specialist per cue. Can a single model hold both abilities and follow whichever cue it is told to?
+        We compare three signals that tell a single model which cue to follow.
+      </p>
+    </div>
+    <div class="signal-cards">
+      <div class="signal-card">
+        <div class="s-name">Mode token</div>
+        <div class="s-what">An extra input in the context: follow the object, or follow the position.</div>
+        <div class="s-result">The unified models reach nonzero success in both tests, where their Match models score zero in the Object-follow test. On average, ICRT and ICLR outperform their Match models, while BPP and Instant-Fold perform worse.</div>
+      </div>
+      <div class="signal-card">
+        <div class="s-name">Language</div>
+        <div class="s-what">A task description that names the target, e.g. &ldquo;insert the plug into the cyan socket at the top&rdquo;.</div>
+        <div class="s-result">ContextFlow reaches <b>68.3%</b> in the Object-follow test on average, against <b>19.0%</b> for its Object specialist.</div>
+      </div>
+      <div class="signal-card">
+        <div class="s-name">Two demonstrations</div>
+        <div class="s-what">The cue the two demonstrations share is the one to follow.</div>
+        <div class="s-result">ICRT and BPP both outperform their Match models on average (Suites 1 and 2); BPP by <b>7.0</b> points.</div>
+      </div>
+    </div>
+    <div class="prose has-text-justified" style="margin-top: 1.25rem;">
+      <p>
+        Mode tokens can enable both abilities in one model but are not always effective, while language, which names the target directly,
+        complements the demonstration and reduces the ambiguity in what to follow.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= Videos ======================= -->
+<section class="section" id="videos">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Videos</h2>
+
+    <div class="video-card">
+      <div class="v-head">
+        <div class="v-title">Match model and re-paired specialists</div>
+        <div class="seg" role="tablist" data-tab-group="spec">
+          <button type="button" class="is-active" data-tab="match" aria-selected="true">Match</button>
+          <button type="button" data-tab="spatial" aria-selected="false">Spatial specialist</button>
+          <button type="button" data-tab="object" aria-selected="false">Object specialist</button>
+        </div>
+      </div>
+      <div class="video-tab-panel is-active" data-tab-panel="spec:match">
+        <video data-autoplay muted loop playsinline controls preload="metadata" poster="static/videos/match_model_match_test.jpg">
+          <source src="static/videos/match_model_match_test.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-tab-panel" data-tab-panel="spec:spatial">
+        <video data-autoplay muted loop playsinline controls preload="none" poster="static/videos/spatial_specialist_spatial_follow.jpg">
+          <source src="static/videos/spatial_specialist_spatial_follow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-tab-panel" data-tab-panel="spec:object">
+        <video data-autoplay muted loop playsinline controls preload="none" poster="static/videos/object_specialist_object_follow.jpg">
+          <source src="static/videos/object_specialist_object_follow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="v-note">
+        ICRT at L2, the same target scene in each suite; only the demonstration and the model change. Real time.
+      </p>
+    </div>
+
+    <div class="video-card">
+      <div class="v-head">
+        <div class="v-title">One model with both abilities</div>
+        <div class="seg" role="tablist" data-tab-group="unified">
+          <button type="button" class="is-active" data-tab="spatial" aria-selected="true">Spatial-follow test</button>
+          <button type="button" data-tab="object" aria-selected="false">Object-follow test</button>
+        </div>
+      </div>
+      <div class="video-tab-panel is-active" data-tab-panel="unified:spatial">
+        <video data-autoplay muted loop playsinline controls preload="metadata" poster="static/videos/unified_spatial_follow.jpg">
+          <source src="static/videos/unified_spatial_follow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="video-tab-panel" data-tab-panel="unified:object">
+        <video data-autoplay muted loop playsinline controls preload="none" poster="static/videos/unified_object_follow.jpg">
+          <source src="static/videos/unified_object_follow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="v-note">
+        Rows: mode token (ICRT, Suite 3), language (ContextFlow, Suite 3) and two demonstrations (ICRT, Suite 1). Each row keeps its model and its L2 target scene across the two tabs; the demonstrations follow the test. Real time.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= BibTeX ======================= -->
+<section class="section wash" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">BibTeX</h2>
+    <!-- PLACEHOLDER: replace the venue and year once the paper is public. -->
+    <div class="bib-wrap">
+      <button class="copy-btn" id="copy-bibtex" type="button">Copy</button>
+      <pre class="bibtex"><code id="bibtex-text">@article{optic,
+  title   = {What to Follow in In-Context Imitation Learning},
+  author  = {Dai, Xianjie and Mi, Li and Mouri Zadeh Khaki, Ahmad and Choi, Kyunghwan and Elhoseiny, Mohamed and Huang, Heye and Ding, Jian},
+  journal = {arXiv preprint},
+  year    = {to be added}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container is-max-desktop has-text-centered">
+    <p>
+      This page is adapted from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a> project-page template,
+      licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
